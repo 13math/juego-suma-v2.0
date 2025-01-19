@@ -24,7 +24,7 @@
         input[type="number"] {
             font-size: 20px;
             padding: 10px;
-            width: 90%;
+            width: 100%;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -73,6 +73,7 @@
         let num2 = Math.floor(Math.random() * 10) + 1;
         let level = 1;
         let score = 0;
+        let correctAnswers = 0;
         let timeLeft = 30;
 
         const problemElement = document.getElementById('problem');
@@ -99,10 +100,14 @@
 
             if (userAnswer === correctAnswer) {
                 score += level * 10;
+                correctAnswers++;
                 timeLeft += 10; // Añade 10 segundos por respuesta correcta
                 resultElement.textContent = '¡Correcto! 🎉';
                 resultElement.style.color = 'green';
-                levelUp();
+
+                if (correctAnswers >= 10) {
+                    levelUp();
+                }
             } else {
                 resultElement.textContent = 'Intenta de nuevo. ❌';
                 resultElement.style.color = 'red';
@@ -115,6 +120,7 @@
 
         function levelUp() {
             level++;
+            correctAnswers = 0; // Reinicia el conteo de respuestas correctas para el nuevo nivel
             levelElement.textContent = `Nivel: ${level}`;
             num1 = Math.floor(Math.random() * (10 * level)) + 1;
             num2 = Math.floor(Math.random() * (10 * level)) + 1;
@@ -126,6 +132,7 @@
                 level = 1;
                 score = 0;
                 timeLeft = 30;
+                correctAnswers = 0;
             }
             num1 = Math.floor(Math.random() * 10) + 1;
             num2 = Math.floor(Math.random() * 10) + 1;
