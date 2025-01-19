@@ -82,7 +82,13 @@
         const scoreElement = document.getElementById('score');
         const timerElement = document.getElementById('timer');
 
-        problemElement.textContent = `¿Cuánto es ${num1} + ${num2}?`;
+        function generateProblem() {
+            num1 = Math.floor(Math.random() * (10 * level)) + 1;
+            num2 = Math.floor(Math.random() * (10 * level)) + 1;
+            problemElement.textContent = `¿Cuánto es ${num1} + ${num2}?`;
+        }
+
+        generateProblem();
 
         const timerInterval = setInterval(() => {
             timeLeft--;
@@ -104,9 +110,11 @@
                 timeLeft += 10; // Añade 10 segundos por respuesta correcta
                 resultElement.textContent = '¡Correcto! 🎉';
                 resultElement.style.color = 'green';
-
+                
                 if (correctAnswers >= 10) {
                     levelUp();
+                } else {
+                    generateProblem();
                 }
             } else {
                 resultElement.textContent = 'Intenta de nuevo. ❌';
@@ -122,9 +130,7 @@
             level++;
             correctAnswers = 0; // Reinicia el conteo de respuestas correctas para el nuevo nivel
             levelElement.textContent = `Nivel: ${level}`;
-            num1 = Math.floor(Math.random() * (10 * level)) + 1;
-            num2 = Math.floor(Math.random() * (10 * level)) + 1;
-            problemElement.textContent = `¿Cuánto es ${num1} + ${num2}?`;
+            generateProblem();
         }
 
         function resetGame(fullReset) {
@@ -134,9 +140,7 @@
                 timeLeft = 30;
                 correctAnswers = 0;
             }
-            num1 = Math.floor(Math.random() * 10) + 1;
-            num2 = Math.floor(Math.random() * 10) + 1;
-            problemElement.textContent = `¿Cuánto es ${num1} + ${num2}?`;
+            generateProblem();
             levelElement.textContent = `Nivel: ${level}`;
             scoreElement.textContent = `Puntaje: ${score}`;
             timerElement.textContent = `Tiempo: ${timeLeft}`;
